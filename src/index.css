@@ -5,9 +5,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  background: gray;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.country {
+  fill: lightgreen;
+  stroke: black;
+  /* stroke-width: ; */
+  stop-opacity: 0.1;
+  stroke-width: 0.05px;
+}
+.country:hover {
+  fill: pink;
 }
