@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import { select, selectAll, json, tsv, zoom, csv, csvParse } from 'd3'
+import { select, selectAll, json, tsv, zoom, csv, csvParse, pointer } from 'd3'
 import {geoPath, geoMercator, geoNaturalEarth1 } from 'd3-geo'
 import { feature } from 'topojson-client'
 
@@ -80,19 +80,56 @@ function Map() {
                 .append('title')
                     .text(d => countryName[d.id])
 
-            g.selectAll('myCircles')
-            .data(data)
-            .enter()
-            .append("circle")
-                .attr("cx", d => projection([d.Long, d.Lat])[0])
-                .attr("cy", d => projection([d.Long, d.Lat])[1])
-                .attr("r", 6)
-                .style("fill", "#ff726f")
-                .attr("stroke", "#69b3a2")
-                .attr("stroke-width", 0.2)
-                .attr("fill-width", 0.4)
+           
+
+                //tooltip events
+                const handleMouseOver = () => {
+                    toolTip.style('opacity', 1)
+                }
+                const handleMouseMove = (e, d) => {
+                    toolTip.html("long:" + d.Long + '<br>' + "lat:" + d.Lat)
+                        .style('left', (e.pageX)+'px')
+                        .style('top', (e.pageY)+'px')
+                }
+                const handleMouseEnter = (d) => {
+                    toolTip.style('opacity', 1)
+                }
+                const handleMouseLeave = (d) => {
+                    toolTip.style('opacity', 0)
+                }
+
+                g.selectAll('myCircles')
+                .data(data)
+                .enter()
+                .append("circle")
+                    .attr("cx", d => projection([d.Long, d.Lat])[0])
+                    .attr("cy", d => projection([d.Long, d.Lat])[1])
+                    .attr("r", 6)
+                    .style("fill", "#ff726f")
+                    .attr("stroke", "#69b3a2")
+                    .attr("stroke-width", 0.2)
+                    .attr("fill-width", 0.4)
+                .on('mouseover', handleMouseOver)
+                .on('mouseleave', handleMouseLeave)
+                .on('mousemove', handleMouseMove)
+
+                   const body = select('body').style('position', 'relative')
+                    const toolTip = select('#container')
+                    .append('div')
+                    .attr('class', 'tooltip')
+                    .style('opacity', 1)
+                    .style('background-color', "white")
+                    .style('border', 'solid')
+                    .style('border-width', '2px')
+                    .style('border-radius', '5px')
+                    .style('padding', '5px')
+                    .style('width', '100px')
+                    .style("position", "absolute")
+                    // .html('h1', 'Title was me')
         })
-    }, [])
+
+
+    }, [data])
 
     // tsv('https://unpkg.com/world-atlas@1.1.4/world/110m.tsv')
     //     .then(data => console.log(data))
@@ -108,7 +145,7 @@ function Map() {
     //             .attr('d', pathGenerator)
     //     })
     return (
-        <div>
+        <div id='container'>
             <p>MAP</p>
             <svg width="960" height="500"></svg>
         </div>
