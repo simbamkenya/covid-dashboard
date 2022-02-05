@@ -146,7 +146,7 @@ function Map() {
     //     })
     return (
         <div id='container'>
-            <p>MAP</p>
+            <p className='text-3xl font-bold underline text-white uppercase'>Map</p>
             <svg width="960" height="500"></svg>
         </div>
     )
