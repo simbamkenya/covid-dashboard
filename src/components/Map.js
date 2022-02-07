@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import { select, selectAll, json, tsv, zoom, csv, csvParse, pointer } from 'd3'
+import React, {useEffect, useState, useRef} from 'react'
+import { select, selectAll, json, tsv, zoom, csv, csvParse, pointer, max, scaleLog, scaleLinear, format } from 'd3'
 import {geoPath, geoMercator, geoNaturalEarth1 } from 'd3-geo'
 import { feature } from 'topojson-client'
 
@@ -7,6 +7,11 @@ function Map() {
     const csvUrl = "https://data.humdata.org/hxlproxy/api/data-preview.csv?url=https%3A%2F%2Fraw.githubusercontent.com%2FCSSEGISandData%2FCOVID-19%2Fmaster%2Fcsse_covid_19_data%2Fcsse_covid_19_time_series%2Ftime_series_covid19_confirmed_global.csv&filename=time_series_covid19_confirmed_global.csv"
 
     const [data, setData] = useState()
+
+    const svgRef = useRef(null)
+    const formatNumber = format(',')
+    
+
     // const fetchData = async (url) => {
     //     const response = await fetch(url)
     //     return await response.text()
@@ -29,16 +34,23 @@ function Map() {
     useEffect(() => {
         csv(csvUrl).then(data => {
             setData(data)
-            // console.log(typeof data)
+            // console.log(data.columns)
         })
     }, [])
 
 // console.log(data)
     useEffect(() => {
-        const svg = select('svg')
+        const svg = select(svgRef.current)
         const g =svg.append('g')
         const projection = geoNaturalEarth1()
         const pathGenerator = geoPath().projection(projection)
+
+        //bubble scale 
+        const radialScale = scaleLinear()
+            .domain([0, 77000000])
+            .range([0, 20])
+            // console.log(radialScale.domain())
+        
 
         svg.call(zoom().on('zoom', (event) => {
             g.attr('transform', event.transform)
@@ -70,7 +82,6 @@ function Map() {
             
 
             const countries = feature(topoJSONdata, topoJSONdata.objects.countries)
-                // console.log(countries)
                 const paths = g.selectAll('paths')
                     .data(countries.features)
                     .enter()
@@ -87,9 +98,10 @@ function Map() {
                     toolTip.style('opacity', 1)
                 }
                 const handleMouseMove = (e, d) => {
-                    toolTip.html("long:" + d.Long + '<br>' + "lat:" + d.Lat)
+                    toolTip.html( "Country: " + d['Country/Region'] + '<br>'+ 'Confirmed cases: ' + formatNumber(d['2/5/22']))
                         .style('left', (e.pageX)+'px')
                         .style('top', (e.pageY)+'px')
+                        .style('class', 'font-bold')
                 }
                 const handleMouseEnter = (d) => {
                     toolTip.style('opacity', 1)
@@ -104,8 +116,10 @@ function Map() {
                 .append("circle")
                     .attr("cx", d => projection([d.Long, d.Lat])[0])
                     .attr("cy", d => projection([d.Long, d.Lat])[1])
-                    .attr("r", 6)
+                    // .attr("r", d => radialScale(d['2/5/22']))
+                    .attr("r", 10)
                     .style("fill", "#ff726f")
+                    .style('opacity', 0.6)
                     .attr("stroke", "#69b3a2")
                     .attr("stroke-width", 0.2)
                     .attr("fill-width", 0.4)
@@ -116,14 +130,14 @@ function Map() {
                    const body = select('body').style('position', 'relative')
                     const toolTip = select('#container')
                     .append('div')
-                    .attr('class', 'tooltip')
-                    .style('opacity', 1)
-                    .style('background-color', "white")
-                    .style('border', 'solid')
-                    .style('border-width', '2px')
-                    .style('border-radius', '5px')
-                    .style('padding', '5px')
-                    .style('width', '100px')
+                    .attr('class', 'tooltip bg-gray-900 text-white shadow-lg rounded px-4 py-4 flex')
+                    .style('opacity', 0)
+                    // .style('background-color', "white")
+                    // .style('border', 'solid')
+                    // .style('border-width', '2px')
+                    // .style('border-radius', '5px')
+                    // .style('padding', '5px')
+                    // .style('width', '100px')
                     .style("position", "absolute")
                     // .html('h1', 'Title was me')
         })
@@ -183,7 +197,7 @@ function Map() {
                 <div className='flex-grow flex flex-col'>
                     <div id='container'>
                         <p className='text-3xl font-bold underline text-white uppercase'>Map</p>
-                        <svg width="960" height="500"></svg>
+                        <svg ref={svgRef} width="960" height="500"></svg>
                     </div>
                 </div>
             </div>
