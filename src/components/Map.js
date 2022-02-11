@@ -162,14 +162,14 @@ function Map() {
         
 
         <div>
-            <div className='min-h-screen flex bg-gray-200'>
+            <div className='max-w-full border-2 border-green-400 flex bg-gray-200'>
                 {/* sidenav */}
 
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
                     <div id='container'>
                         <p className='text-3xl font-bold underline text-red-500 uppercase text-center mb-4'>Covid Cases Around the Globe</p>
-                        <svg ref={svgRef} width="960" height="500"></svg>
+                        <svg ref={svgRef} viewBox="0 0  980 500" preserveAspectRatio ="xMidYMid meet"></svg>
                     </div>
                 </div>
             </div>
