@@ -129,7 +129,7 @@ function LineChart() {
       .append("svg")
       // .attr("width", width + margin.left + margin.right)
       // .attr("height", height + margin.top + margin.bottom)
-      .attr('viewBox', '0 0 500 400')
+      .attr('viewBox', '0 0 600 450')
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);

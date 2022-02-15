@@ -174,12 +174,14 @@ function Dash() {
                         <Map />
                     </div>
 
-                    <div className='border-2 border-red-400 grid grid-rows-2 gap-4'>
-                      <div className='border-4 border-green-500'>
+                    <div className='border-2 border-red-200 flex'>
+                      <div className='border-4 border-green-500 w-3/5'>
                          <LineChart />
                       </div>
-                      <div className='border-4 border-green-500'>
-                        <Donut />
+                      <div className='border-4 border-green-500 w-2/5'>
+                        <div className='flex justify-center items-center'>
+                          <Donut />
+                        </div>
                       </div>
                     </div>
                 </div>
