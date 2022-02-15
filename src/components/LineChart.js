@@ -1,13 +1,121 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 // import ddd from 'time_series_covid19_confirmed_global.csv'
-import { select, selectAll, area, csv, max, line, scaleLinear, timeParse, scaleTime, axisBottom, axisLeft, extent } from 'd3'
+import { select, descending, ascending, selectAll, area, csv, max, line, scaleLinear, timeParse, scaleTime, axisBottom, axisLeft, extent, bisector, pointer } from 'd3'
 
 function LineChart() {
+  const lineRef = useRef(null)
+
   const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
 
   // const csvUrl = process.env.PUBLIC_URL+"/time_series_covid19_confirmed_global.csv"
   const csvUrl = 'https://raw.githubusercontent.com/plotly/datasets/master/timeseries.csv'
-  csv(csvUrl).then(data => console.log(data))
+  // csv(csvUrl).then(data => console.log(data))
+  
+    csv('time_series_covid19_confirmed_global.csv').then(data =>{
+      data.forEach(e => {
+        delete e['Province/State']
+        delete e['Lat']
+        delete e['Long']
+      })
+
+      data.forEach(e => {
+        for (let key in e){
+        if(key != 'Country/Region'){
+          e[key] = parseInt(e[key])
+        }
+        }
+      })
+
+    //  console.log(Object.values(data)[0])
+      const results = data.reduce((acc, x) => {
+        let id = acc[x['Country/Region']]
+
+        if(id){
+          id['Country/Region'] = x['Country/Region']
+        } else{
+          acc[x['Country/Region']]= x
+        }
+        return acc;
+      }, [])
+
+
+      const popresult = []
+
+      for (let key in results) {
+        popresult.push(results[key])
+      }
+
+    //  console.log(popresult[0])
+
+    const keylist = []
+    let i=0
+
+    popresult.forEach(e => {
+      if(i == 0){
+        for (let k in e){
+            if(k !== "Country/Region"){
+              keylist.push(k)
+            }
+        }
+      }
+      i++
+    })
+
+
+    const finaldata = []
+    const dataTime = []
+
+    keylist.forEach(mykey => {
+      const parseDate = timeParse("%m/%d/%y");
+      const newresult = []
+
+      popresult.forEach(e => {
+          // temparray = []
+          for(let k in e){
+              let country = e['Country/Region']
+              if(k == mykey){
+                  newresult.push({"country":country,value:e[k]})
+              }
+          } 
+      })
+      // console.log(newresult[0])
+
+      // let data1 = newresult.sort(function (a, b) {
+      //   return descending(a.value, b.value);
+      //   })
+        // console.log(data1[0])
+      // let  data1 = data1.slice(0,10);
+      //   let data1 = data1.sort(function (a, b) {
+      //   return ascending(a.value, b.value);
+      //   })
+      //   // console.log("data",data);
+      //   dataTime.push(parseDate(mykey))
+      //   finaldata.push({[parseDate(mykey)]:data1})
+      
+    })
+
+    
+    // console.log('00', Object.values(popresult[0]))
+
+    // popresult.forEach(item => console.log(item))
+    // console.log(data1)
+
+    //  const countries = Object.keys(results)
+
+    //  countries.forEach(item => {
+    //    console.log(results[item['Country/Region']])
+    //   // for (let key in item){
+    //   //   console.log(item[key])
+    //   // }
+    //   //  return { date: parseDate(), value: item[] }
+    //  })
+    //  console.log(results)
+    // console.log(data)
+  })
+
+  // csv('time_series_covid19_deaths_global.csv').then(data => console.log(data.length))
+  // csv('time_series_covid19_recovered_global.csv').then(data => console.log(data.length))
+
   useEffect(() => {
     // set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
@@ -17,7 +125,7 @@ function LineChart() {
     const parseDate = timeParse("%Y-%m-%d")
 
     // append the svg object to the body of the page
-    const svg = select("#my_dataviz")
+    const svg = select('#my_dataviz')
       .append("svg")
       // .attr("width", width + margin.left + margin.right)
       // .attr("height", height + margin.top + margin.bottom)
@@ -42,17 +150,51 @@ function LineChart() {
             .domain(extent(data, d => d.date))
             .range([0, width]);
 
+            // console.log(data)
+
           svg.append("g")
             .attr("transform", `translate(0, ${height})`)
-            .call(axisBottom(x));
+            .call(axisBottom(x)).attr('class', 'text-white');
+
+         const focus = svg.append('g')
+            .attr('class', 'focus')
+            .style('display', 'none');
+
+          focus.append('line')
+            .classed('x', true);
+
+        //  const lines = svg.append("line")
+        //     .data(data)
+        //     .attr("x1", d => x(d.date))
+        //     .attr("y1", 0)
+        //     .attr("x2", d => x(d.date))
+        //     .attr("y2", height)
+        //     .style("stroke", "red")
+        //     .style("stroke-width", 2)
+        //     .style('stroke-dasharray', 10)
+
+          // const handleMouseMove = (e) => {
+          //   const bisectDate =  bisector(d => d.date).left;
+
+          //   const x0 = x.invert(pointer(e)[0]);
+          //   const i = bisectDate(data, x0, 1);
+          //   const d0 = data[i - 1];
+          //   const d1 = data[i];
+          //   const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+
+          // }
 
           // Add Y axis
           const y = scaleLinear()
             .domain([0, max(data, d => +d.value)])
-            .range([height, 0]);
+            .range([height, 0])
+            
+            // .format(".2s")
+            // .ticks()
+            // .tickFormat(".1f");
+            
           svg.append("g")
-            .call(axisLeft(y));
-
+            .call(axisLeft(y).ticks(20, "s").tickSize(-width).ticks(6)).attr('class', 'text-white')
           // Add the line
           svg.append("path")
             .datum(data)
@@ -63,7 +205,7 @@ function LineChart() {
               .x(d => x(d.date))
               .y(d => y(d.value))
             )
-            .on('on')
+            
 
              //area
           // Add the area
@@ -71,7 +213,7 @@ function LineChart() {
           .datum(data)
           .attr("fill", "#cce5df")
           .attr("stroke", "#69b3a2")
-          .attr("stroke-width", 1.5)
+          .attr("stroke-width", 1)
           .attr("d", area()
             .x(d => x(d.date))
             .y0(y(0))
@@ -79,7 +221,7 @@ function LineChart() {
             )
             .style("fill", "url(#areaGradient)")
 
-          //area gradident 
+          //area gradident
           let areaGradient = svg
           .append("defs")
           .append("linearGradient")
@@ -92,32 +234,24 @@ function LineChart() {
           areaGradient
           .append("stop")
           .attr("offset", 0.2)
-          .attr("stop-color", "#D7F205")
+          .attr("stop-color", "#0072ff")
           .attr("stop-opacity", 0.5);
-      
+
         areaGradient
           .append("stop")
           .attr("offset", 0.9)
-          .attr("stop-color", "#131B26")
+          .attr("stop-color", "#00c6ff")
           .attr("stop-opacity", 0);
 
-            const lines = svg.append("line")
-              .data(data)
-              .attr("x1", d => x(d.date))
-              .attr("y1", 0)
-              .attr("x2", d => x(d.date))
-              .attr("y2", height)
-              .style("stroke", "red")
-              .style("stroke-width", 2)
-              .style('stroke-dasharray', 10)
-              
+
+
 
 
         })
   }, [])
 
   return (
-    <div id='my_dataviz' className='py-4 px-4'></div>
+      <div  ref={lineRef} id='my_dataviz' className='py-4 px-4 border-orange-700 border-4'></div>
   )
 }
 

@@ -1,13 +1,14 @@
 import React from 'react'
+import Donut from './Donut'
 import LineChart from './LineChart'
 import Map from './Map'
 
 function Dash() {
   return (
     <div>
-      <div className='min-h-screen flex bg-gray-200'>
+      <div className='min-h-screen flex bg-gray-700'>
                 {/* sidenav */}
-                <div className='flex-shrink-0 w-64 bg-gray-900'>
+                <div className='flex-shrink-0 w-64 bg-gray-700'>
                     <a>
                         <div className='flex items-center h-16 px-4 bg-gray-900 text-xl text-white font-medium'>
                         <svg className='relative w-8 h-8 fill-current svg-icon' viewBox="0 0 20 20">
@@ -21,20 +22,129 @@ function Dash() {
                     <div className='px-2 py-2'></div>
                 </div>
 
-                <div className='px-6 py-6 text-white'>
+                {/* <div className='px-6 py-6 text-white'>
                     <a>Phonebbok</a>
-                </div>
+                </div> */}
 
                 <div className='px-6 py-6 border-t border-gray-700'>
-                    <h4 className='text-sm text-gray-600 uppercase font-bold tracking-widest'>Contact</h4>
-                    <ul className='mt-3 text-white'>
-                        <li className='mt-3'><a href="">Testing</a></li>
-                        <li className='mt-3'><a href="">Vaccination</a></li>
-                        <li className='mt-3'><a href="">Cases</a></li>
-                    </ul>
-                </div>
+                    <div className='mb-4 w-full shadow-md rounded border-gray-400'>
+                      <h4 className='text-sm text-white uppercase font-bold tracking-widest'>Confirmed Cases</h4>
+                      <table className='text-white table-auto mt-2'>
+                        <thead className='bg-gray-500 rounded-sm'>
+                          <tr>
+                            <th className='p-2 text-left font-bold'>Country</th>
+                            <th className='p-2 text-left font-bold'>No of Cases</th>
+                          </tr>
+                        </thead>
 
-                
+                        <tbody className='divide-y divide-gray-300'>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className='mb-4 w-full shadow-md rounded border-gray-400'>
+                      <h4 className='text-sm text-white uppercase font-bold tracking-widest'>Death Cases</h4>
+                      <table className='text-white table-auto mt-2'>
+                        <thead className='bg-gray-500 rounded-sm'>
+                          <tr>
+                            <th className='p-2 text-left font-bold'>Country</th>
+                            <th className='p-2 text-left font-bold'>No of Cases</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className='divide-y divide-gray-300'>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className='mb-4 w-full shadow-md rounded border-gray-400'>
+                      <h4 className='text-sm text-white uppercase font-bold tracking-widest'>No Vaccinated</h4>
+                      <table className='text-white table-auto mt-2'>
+                        <thead className='bg-gray-500 rounded-sm'>
+                          <tr>
+                            <th className='p-2 text-left font-bold'>Country</th>
+                            <th className='p-2 text-left font-bold'>No of Cases</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className='divide-y divide-gray-300'>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                          <tr>
+                            <td>Kenya</td>
+                            <td>120,345</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+ 
                 </div>
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
@@ -61,11 +171,16 @@ function Dash() {
                             <h2>057,350,250</h2>
                           </div>
                       </div>
-                        {/* <Map /> */}
+                        <Map />
                     </div>
 
-                    <div className='border-2 border-red-400'>
-                      <LineChart />
+                    <div className='border-2 border-red-400 grid grid-rows-2 gap-4'>
+                      <div className='border-4 border-green-500'>
+                         <LineChart />
+                      </div>
+                      <div className='border-4 border-green-500'>
+                        <Donut />
+                      </div>
                     </div>
                 </div>
             </div>

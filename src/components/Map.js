@@ -118,7 +118,7 @@ function Map() {
                     .attr("cy", d => projection([d.Long, d.Lat])[1])
                     // .attr("r", d => radialScale(d['2/5/22']))
                     .attr("r", 10)
-                    .style("fill", "#ff726f")
+                    .style("fill", "#9966cc")
                     .style('opacity', 0.6)
                     .attr("stroke", "#69b3a2")
                     .attr("stroke-width", 0.2)
