@@ -27,3 +27,9 @@ body {
   stroke: #4691f6;
   stroke-width: 1;
 }
+.round {
+  stroke-linecap: round;
+}
+circle:hover {
+  opacity: 0;
+}

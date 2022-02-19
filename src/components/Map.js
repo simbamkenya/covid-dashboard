@@ -75,6 +75,8 @@ function Map() {
                 return accumulator;
             }, {})
 
+            // console.log('countrynames', countryName)
+
             // const countryName = {};
             // tsvData.forEach(d => {
             //     countryName[d.iso_n3] = d.name
@@ -90,6 +92,8 @@ function Map() {
                     .attr('d', pathGenerator)
                 .append('title')
                     .text(d => countryName[d.id])
+
+                // console.log(countries.features)
 
            
 
@@ -118,7 +122,8 @@ function Map() {
                     .attr("cy", d => projection([d.Long, d.Lat])[1])
                     // .attr("r", d => radialScale(d['2/5/22']))
                     .attr("r", 10)
-                    .style("fill", "#9966cc")
+                    .attr('class', 'circles')
+                    .style("fill", "#45A292")
                     .style('opacity', 0.6)
                     .attr("stroke", "#69b3a2")
                     .attr("stroke-width", 0.2)
@@ -130,7 +135,7 @@ function Map() {
                    const body = select('body').style('position', 'relative')
                     const toolTip = select('#container')
                     .append('div')
-                    .attr('class', 'tooltip bg-gray-900 text-white shadow-lg rounded px-4 py-4 flex')
+                    .attr('class', 'tooltip bg-gray-900 font-medium text-white shadow-lg rounded px-4 py-4 flex')
                     .style('opacity', 0)
                     // .style('background-color', "white")
                     // .style('border', 'solid')
@@ -162,13 +167,13 @@ function Map() {
         
 
         <div>
-            <div className='max-w-full border-2 border-green-400 flex bg-gray-200'>
+            <div className='max-w-full b flex bg-[#0c0f1f]'>
                 {/* sidenav */}
 
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
                     <div id='container'>
-                        <p className='text-3xl font-bold underline text-red-500 uppercase text-center mb-4'>Covid Cases Around the Globe</p>
+                        <p className='text-3xl font-bold underline text-[#66fcf1] uppercase text-center mb-4'>Covid Cases Around the Globe</p>
                         <svg ref={svgRef} viewBox="0 0  980 500" preserveAspectRatio ="xMidYMid meet"></svg>
                     </div>
                 </div>

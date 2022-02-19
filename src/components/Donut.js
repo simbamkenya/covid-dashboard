@@ -23,7 +23,7 @@ useEffect(() => {
         .innerRadius(50)
         .outerRadius(70);
 
-    const colors = scaleOrdinal(["pink", "cornflowerblue", "tomato"])
+    const colors = scaleOrdinal(["pink", "cornflowerblue"])
 
     //setting the stage
     const svg = select(pieChart.current)
@@ -47,19 +47,14 @@ useEffect(() => {
         .join("path")
             .attr("d", arcGenerator)
             .attr("fill", (d,i) => colors(i))
-            .attr("stroke", "white")
-            .on("mouseover", (e,d)=>{
-                tooltip.style("visibility", "visible")
-                    .text(`${d.data.country}:`  +  `${d.data.count}`)
-            })
-            .on("mousemove", (e,d) => {
-                tooltip.style("top", (e.pageY -50) + 'px')
-                        .style("left", (e.pageX -50) + 'px')
-            })
-            .on("mouseout", () => {
-                tooltip.style("visibility", "hidden")
-            })
+            // .attr("stroke", "white")
+            .attr("class", "round")
 
+            svg.append("text")
+            .attr("text-anchor", "middle")
+            .text(97 + "%").attr('class', 'font-medium text-3xl fill-orange-400')
+            .attr("dominant-baseline", "middle")
+           
 })
   return (
         <svg ref={pieChart} viewBox="0 0 200 200"  preserveAspectRatio='xMidYMid meet'></svg>

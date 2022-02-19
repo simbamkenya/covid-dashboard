@@ -153,20 +153,20 @@ function Dash() {
                         <h1 className='text-white text-3xl font-bold  -tracking-widest text-right uppercase'>Covid-19 Dashboard</h1>
                       </div>
                       <div className='md:grid grid-cols-4 gap-4 ml-8 my-4 '>
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2'>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Confirmed Cases</h2>
                             <h2>057,350,250</h2>
                           </div>
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2'>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Recovered Cases</h2>
                             <h2>057,350,250</h2>
                           </div>
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2'>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>No of Deaths</h2>
                             <h2>057,350,250</h2>
                           </div>
 
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2'>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Vaccinated</h2>
                             <h2>057,350,250</h2>
                           </div>

@@ -25,11 +25,36 @@ function LineChart() {
         }
         }
       })
+      const countries = []
 
-    //  console.log(Object.values(data)[0])
+      data.forEach(e => {
+        for(let k in e){
+          if(!countries.includes(e['Country/Region']))
+          countries.push(e['Country/Region'])
+        }
+      })
+      
+      const highest = []
+
+      const timeFrame = []
+
+      data.forEach(e => {
+        for(let k in e){
+          if(k !== 'Country/Region'){
+            timeFrame.push(k)
+          }
+        }
+      })
+      // console.log(timeFrame) 
+      // data.forEach(e => {
+      //   for(let k in e){
+      //     if()
+      //   }
+      // })
+
       const results = data.reduce((acc, x) => {
         let id = acc[x['Country/Region']]
-
+    
         if(id){
           id['Country/Region'] = x['Country/Region']
         } else{
@@ -38,88 +63,67 @@ function LineChart() {
         return acc;
       }, [])
 
-
       const popresult = []
 
-      for (let key in results) {
+      for (let key in results){
         popresult.push(results[key])
       }
+      // console.log(popresult[0])
 
-    //  console.log(popresult[0])
-
-    const keylist = []
-    let i=0
-
-    popresult.forEach(e => {
-      if(i == 0){
-        for (let k in e){
-            if(k !== "Country/Region"){
-              keylist.push(k)
-            }
-        }
-      }
-      i++
-    })
-
-
-    const finaldata = []
-    const dataTime = []
-
-    keylist.forEach(mykey => {
-      const parseDate = timeParse("%m/%d/%y");
-      const newresult = []
-
-      popresult.forEach(e => {
-          // temparray = []
-          for(let k in e){
-              let country = e['Country/Region']
-              if(k == mykey){
-                  newresult.push({"country":country,value:e[k]})
-              }
-          } 
-      })
-      // console.log(newresult[0])
-
-      // let data1 = newresult.sort(function (a, b) {
-      //   return descending(a.value, b.value);
-      //   })
-        // console.log(data1[0])
-      // let  data1 = data1.slice(0,10);
-      //   let data1 = data1.sort(function (a, b) {
-      //   return ascending(a.value, b.value);
-      //   })
-      //   // console.log("data",data);
-      //   dataTime.push(parseDate(mykey))
-      //   finaldata.push({[parseDate(mykey)]:data1})
       
-    })
 
-    
-    // console.log('00', Object.values(popresult[0]))
+      timeFrame.forEach(time => {
 
-    // popresult.forEach(item => console.log(item))
-    // console.log(data1)
+      })
+      // console.log(Object.values(data)[0])
 
-    //  const countries = Object.keys(results)
-
-    //  countries.forEach(item => {
-    //    console.log(results[item['Country/Region']])
-    //   // for (let key in item){
-    //   //   console.log(item[key])
-    //   // }
-    //   //  return { date: parseDate(), value: item[] }
-    //  })
-    //  console.log(results)
-    // console.log(data)
   })
 
-  // csv('time_series_covid19_deaths_global.csv').then(data => console.log(data.length))
-  // csv('time_series_covid19_recovered_global.csv').then(data => console.log(data.length))
+  csv('time_series_covid19_deaths_global.csv').then(data => {
+
+    data.forEach(e => {
+      delete e['Province/State']
+      delete e['Lat']
+      delete e['Long']
+    })
+
+    const columns = []
+    data.forEach(e => {
+      for(let k in e){
+        if(k !== 'Country/Region'){
+          columns.push(k)
+        }
+      }
+    })
+    const latest = columns[columns.length - 1]
+    // console.log(columns[columns.length - 1])
+    const latestDeaths = []
+    
+    data.forEach(e => {
+      for(let k in e){
+        if(k === latest){
+          latestDeaths.push(+e[k])
+        }
+      }
+    })
+  const totalDeaths=  latestDeaths.reduce((acc, x) => acc + x, 0)
+    console.log(totalDeaths)
+
+    //top 10 death cases
+   const deaths=  latestDeaths.sort((a,b)=> b - a).slice(0,10)
+
+   const countries = 
+   console.log(deaths)
+
+  })
+  csv('time_series_covid19_recovered_global.csv').then(data => {
+
+  })
 
   useEffect(() => {
     // set the dimensions and margins of the graph
     const margin = { top: 10, right: 30, bottom: 30, left: 60 },
-      width = 400 - margin.left - margin.right,
+      width = 800 - margin.left - margin.right,
       height = 400 - margin.top - margin.bottom;
 
     const parseDate = timeParse("%Y-%m-%d")
@@ -192,6 +196,7 @@ function LineChart() {
             // .format(".2s")
             // .ticks()
             // .tickFormat(".1f");
+            
             
           svg.append("g")
             .call(axisLeft(y).ticks(20, "s").tickSize(-width).ticks(6)).attr('class', 'text-white')
