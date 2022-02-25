@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Donut from './Donut'
 import LineChart from './LineChart'
 import Map from './Map'
 
 function Dash() {
+   
+  const [deaths, setDeaths] = useState([])
+  const [totalDeaths, setTotalDeaths] = useState(0)
+  const [confirmed, setConfirmed] = useState(0)
+  const [recovered, setRecovered] = useState([])
+  const [totalRecovered, setTotalRecovered] = useState(0)
+
+  // console.log('c', confirmed)
   return (
     <div>
       <div className='min-h-screen flex bg-gray-700'>
@@ -22,9 +30,6 @@ function Dash() {
                     <div className='px-2 py-2'></div>
                 </div>
 
-                {/* <div className='px-6 py-6 text-white'>
-                    <a>Phonebbok</a>
-                </div> */}
 
                 <div className='px-6 py-6 border-t border-gray-700'>
                     <div className='mb-4 w-full shadow-md rounded border-gray-400'>
@@ -38,30 +43,12 @@ function Dash() {
                         </thead>
 
                         <tbody className='divide-y divide-gray-300'>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
+                          {deaths.map((e, i) => (
+                              <tr key={e.country}>
+                                <td>{`${++i}.`} {e.country}</td>
+                                <td>{e.deaths}</td>
+                            </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
@@ -77,36 +64,18 @@ function Dash() {
                         </thead>
 
                         <tbody className='divide-y divide-gray-300'>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
+                          {deaths.map((e, i) => (
+                              <tr key={e.country}>
+                                <td>{`${++i}.`} {e.country}</td>
+                                <td>{e.deaths}</td>
+                            </tr>
+                            ))}
                         </tbody>
                       </table>
                     </div>
 
                     <div className='mb-4 w-full shadow-md rounded border-gray-400'>
-                      <h4 className='text-sm text-white uppercase font-bold tracking-widest'>No Vaccinated</h4>
+                      <h4 className='text-sm text-white uppercase font-bold tracking-widest'>No Recovered</h4>
                       <table className='text-white table-auto mt-2'>
                         <thead className='bg-gray-500 rounded-sm'>
                           <tr>
@@ -116,30 +85,12 @@ function Dash() {
                         </thead>
 
                         <tbody className='divide-y divide-gray-300'>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
+                          {recovered.map((e, i) => (
+                            <tr key={e.country}>
+                              <td>{`${++i}.`} {e.country}</td>
+                              <td>{e.recovered}</td>
                           </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
-                          <tr>
-                            <td>Kenya</td>
-                            <td>120,345</td>
-                          </tr>
+                          ))}
                         </tbody>
                       </table>
                     </div>
@@ -152,23 +103,23 @@ function Dash() {
                       <div className='bg-gray-900 px-4 py-6'>
                         <h1 className='text-white text-3xl font-bold  -tracking-widest text-right uppercase'>Covid-19 Dashboard</h1>
                       </div>
-                      <div className='md:grid grid-cols-4 gap-4 ml-8 my-4 '>
+                      <div className='md:grid grid-cols-4 gap-3 ml-8 my-4 '>
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Confirmed Cases</h2>
-                            <h2>057,350,250</h2>
+                            <h2>{confirmed}</h2>
                           </div>
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Recovered Cases</h2>
-                            <h2>057,350,250</h2>
+                            <h2>{totalRecovered}</h2>
                           </div>
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
+                          {/* <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>No of Deaths</h2>
-                            <h2>057,350,250</h2>
-                          </div>
+                            <h2>{totalDeaths}</h2>
+                          </div> */}
 
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
                             <h2>Vaccinated</h2>
-                            <h2>057,350,250</h2>
+                            <h2>{totalDeaths}</h2>
                           </div>
                       </div>
                         <Map />
@@ -176,7 +127,7 @@ function Dash() {
 
                     <div className='border-2 border-red-200 flex'>
                       <div className='border-4 border-green-500 w-3/5'>
-                         <LineChart />
+                         <LineChart  setDeaths={setDeaths} setTotalDeaths={setTotalDeaths} setConfirmed={setConfirmed} setRecovered={setRecovered} setTotalRecovered={setTotalRecovered}/>
                       </div>
                       <div className='border-4 border-green-500 w-2/5'>
                         <div className='flex justify-center items-center'>

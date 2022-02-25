@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 // import ddd from 'time_series_covid19_confirmed_global.csv'
 import { select, descending, ascending, selectAll, area, csv, max, line, scaleLinear, timeParse, scaleTime, axisBottom, axisLeft, extent, bisector, pointer } from 'd3'
 
-function LineChart() {
+function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTotalRecovered}) {
   const lineRef = useRef(null)
 
   const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
@@ -34,8 +34,6 @@ function LineChart() {
         }
       })
       
-      const highest = []
-
       const timeFrame = []
 
       data.forEach(e => {
@@ -45,37 +43,33 @@ function LineChart() {
           }
         }
       })
-      // console.log(timeFrame) 
-      // data.forEach(e => {
-      //   for(let k in e){
-      //     if()
-      //   }
-      // })
+      // console.log(timeFrame)
 
-      const results = data.reduce((acc, x) => {
-        let id = acc[x['Country/Region']]
-    
-        if(id){
-          id['Country/Region'] = x['Country/Region']
-        } else{
-          acc[x['Country/Region']]= x
+      const last = timeFrame[timeFrame.length - 1]
+     
+      const latestConfirmed = []
+
+      data.forEach(e => {
+        for(let k in e){
+          if(k === last){
+           latestConfirmed.push(+e[k]) 
+          }
         }
-        return acc;
-      }, [])
-
-      const popresult = []
-
-      for (let key in results){
-        popresult.push(results[key])
-      }
-      // console.log(popresult[0])
-
-      
-
-      timeFrame.forEach(time => {
-
       })
-      // console.log(Object.values(data)[0])
+     const totalConfirmed =  latestConfirmed.reduce((acc, x) => acc + x, 0)
+
+      setConfirmed(totalConfirmed)
+
+      const confirmedByCountry = []
+
+      data.forEach(e => {
+        for(let k in e){
+          if(k === last){
+            confirmedByCountry.push({country: e['Country/Region'], confirmed: +e[last]})
+          }
+        }
+      })
+      console.log(confirmedByCountry)
 
   })
 
@@ -87,38 +81,111 @@ function LineChart() {
       delete e['Long']
     })
 
-    const columns = []
-    data.forEach(e => {
-      for(let k in e){
-        if(k !== 'Country/Region'){
-          columns.push(k)
+      const columns = []
+      data.forEach(e => {
+        for(let k in e){
+          if(k !== 'Country/Region'){
+            columns.push(k)
+          }
         }
-      }
-    })
+      })
+
+    // console.log(columns)
     const latest = columns[columns.length - 1]
     // console.log(columns[columns.length - 1])
     const latestDeaths = []
     
+      data.forEach(e => {
+        for(let k in e){
+          if(k === latest){
+            latestDeaths.push(+e[k])
+          }
+        }
+      })
+    const totalDeaths=  latestDeaths.reduce((acc, x) => acc + x, 0)
+      // console.log(totalDeaths)
+
+    const deathsByCountry = []
+
     data.forEach(e => {
       for(let k in e){
         if(k === latest){
-          latestDeaths.push(+e[k])
+          deathsByCountry.push({country: e['Country/Region'], deaths: +e[latest]})
         }
       }
     })
-  const totalDeaths=  latestDeaths.reduce((acc, x) => acc + x, 0)
-    console.log(totalDeaths)
-
-    //top 10 death cases
-   const deaths=  latestDeaths.sort((a,b)=> b - a).slice(0,10)
-
-   const countries = 
-   console.log(deaths)
+        // console.log(deathsByCountry)
+      
+      const confirmedDeaths = deathsByCountry.sort((a, b) => b.deaths - a.deaths).slice(0,10);
+      setDeaths(confirmedDeaths)
+      setTotalDeaths(totalDeaths)
 
   })
+
   csv('time_series_covid19_recovered_global.csv').then(data => {
+      data.forEach(e => {
+        delete e['Province/State']
+        delete e['Lat']
+        delete e['Long']
+      })
 
-  })
+      const columns = []
+      data.forEach(e => {
+        for(let k in e){
+          if(k !== 'Country/Region'){
+            columns.push(k)
+          }
+        }
+      })
+   
+      const latest = columns[columns.length - 1]
+
+      const recovered = []
+        
+        data.forEach(e => {
+          for(let k in e){
+            if(k === latest){
+              recovered.push(+e[k])
+            }
+          }
+        })
+
+
+        const recoveredByCountry = []
+
+        data.forEach(e => {
+          for(let k in e){
+            if(k === latest){
+              recoveredByCountry.push({country: e['Country/Region'], recovered: +e[latest]})
+            }
+          }
+        })
+      
+      const confirmedRecovered = recoveredByCountry.sort((a, b) => b.recovered - a.recovered).slice(0,10);
+      const totalRecovered =  recovered.reduce((acc, x) => acc + x, 0)
+
+      setTotalRecovered(totalRecovered)
+      setRecovered(confirmedRecovered)
+    
+
+   })
+   csv('time_series_covid19_confirmed_global_line.csv').then(data => {
+      data.forEach(e => {
+        delete e['Province/State']
+        delete e['Lat']
+        delete e['Long']
+      })
+
+      console.log(typeof data)
+
+      const d = []
+
+      // data.forEach(e => {
+
+      // })
+
+   })
+   
 
   useEffect(() => {
     // set the dimensions and margins of the graph
