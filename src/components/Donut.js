@@ -29,10 +29,11 @@ useEffect(() => {
     const colors = scaleOrdinal(["pink", "cornflowerblue"])
 
     //setting the stage
-    const svg = select(pieChart.current).remove()
+    const svg = select(pieChart.current)
+
         // .attr("width", width)
         // .attr("height", height)
-        .attr("background-color", "green")
+        svg.attr("background-color", "green")
         .append("g")
             .attr('transform', 'translate(' + 100 + ',' + 120 + ')')
       

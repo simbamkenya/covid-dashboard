@@ -33,9 +33,9 @@ function Dash() {
 
   return (
     <div>
-      <div className='min-h-screen flex bg-gray-700 border-8'>
+      <div className='min-h-screen md:flex bg-gray-700 border-8'>
                 {/* sidenav */}
-                <div className='flex-shrink-0 w-64 bg-gray-700'>
+                <div className='flex-shrink-0 w-full md:w-64 bg-gray-700'>
                     <a>
                         <div className='flex items-center h-16 px-4 bg-gray-900 text-xl text-white font-medium'>
                         <svg className='relative w-8 h-8 fill-current svg-icon' viewBox="0 0 20 20">
@@ -119,7 +119,7 @@ function Dash() {
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
                     <div id='container'>
-                      <div className='bg-gray-900 px-4 py-6'>
+                      <div className='bg-gray-900 px-4 py-6 hidden md:block'>
                         <h1 className='text-white text-3xl font-bold  -tracking-widest text-right uppercase'>Covid-19 Dashboard</h1>
                       </div>
                       <div className='md:grid grid-cols-3 gap-3 ml-8 my-4 '>
