@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
-import { select, selectAll, json, tsv, zoom, csv, csvParse, pointer, max, scaleLog, scaleLinear, format } from 'd3'
-import {geoPath, geoMercator, geoNaturalEarth1 } from 'd3-geo'
+import { select, selectAll, json, tsv, zoom, csv, pointer, max, scaleLinear, format } from 'd3'
+import {geoPath, geoNaturalEarth1 } from 'd3-geo'
 import { feature } from 'topojson-client'
 
 function Map() {
@@ -11,34 +11,13 @@ function Map() {
     const svgRef = useRef(null)
     const formatNumber = format(',')
     
-
-    // const fetchData = async (url) => {
-    //     const response = await fetch(url)
-    //     return await response.text()
-    // }
-
-    // fetchData(csvUrl).then(text => {
-    //     const data = csvParse(text)
-    // })
-    
-    // const markers = [
-    //     {long: 9.083, lat: 42.149}, // corsica
-    //     {long: 7.26, lat: 43.71}, // nice
-    //     {long: 2.349, lat: 48.864}, // Paris
-    //     {long: -1.397, lat: 43.664}, // Hossegor
-    //     {long: 3.075, lat: 50.640}, // Lille
-    //     {long: -3.83, lat: 58}, // Morlaix
-    //   ];
-    
-    
     useEffect(() => {
         csv(csvUrl).then(data => {
             setData(data)
-            // console.log(data.columns)
+            
         })
     }, [])
 
-// console.log(data)
     useEffect(() => {
         const svg = select(svgRef.current)
         const g =svg.append('g')
@@ -49,13 +28,12 @@ function Map() {
         const radialScale = scaleLinear()
             .domain([0, 77000000])
             .range([0, 20])
-            // console.log(radialScale.domain())
         
 
-        svg.call(zoom().on('zoom', (event) => {
-            g.attr('transform', event.transform)
-            // console.log('zzz')
-        }))
+        // svg.call(zoom().on('zoom', (event) => {
+        //     g.attr('transform', event.transform)
+        //     // console.log('zzz')
+        // }))
 
         // d3.zoom()
         // .on('zoom', (event) => {
@@ -137,32 +115,14 @@ function Map() {
                     .append('div')
                     .attr('class', 'tooltip bg-gray-900 font-medium text-white shadow-lg rounded px-4 py-4 flex')
                     .style('opacity', 0)
-                    // .style('background-color', "white")
-                    // .style('border', 'solid')
-                    // .style('border-width', '2px')
-                    // .style('border-radius', '5px')
-                    // .style('padding', '5px')
-                    // .style('width', '100px')
                     .style("position", "absolute")
-                    // .html('h1', 'Title was me')
+                    
         })
 
 
     }, [data])
 
-    // tsv('https://unpkg.com/world-atlas@1.1.4/world/110m.tsv')
-    //     .then(data => console.log(data))
 
-    // json('https://unpkg.com/world-atlas@1.1.4/world/110m.json')
-    //     .then(data => {
-    //        const countries = feature(data, data.objects.countries)
-    //         // console.log(countries)
-    //         const paths = svg.selectAll('paths')
-    //             .data(countries.features)
-    //             .enter()
-    //             .append('path')
-    //             .attr('d', pathGenerator)
-    //     })
     return (
         
 

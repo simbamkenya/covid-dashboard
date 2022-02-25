@@ -1,21 +1,24 @@
 import React, {useEffect, useRef} from 'react'
 import  {pie, arc, scaleOrdinal, select} from "d3"
 
-function Donut() {
+function Donut({conf, totalConf, pieD}) {
 
     var margin = { top: 20, right: 10, bottom: 20, left: 10 },
     width = 350 - margin.left - margin.right,
     height = 350 - margin.top - margin.bottom;
-     
 
-    const data = [
-                    {country: "Kenya", count: 4},
-                    {country: "Tanzania", count: 6},
-                ];
+    
 
 const pieChart = useRef()
 
 useEffect(() => {
+
+    
+    const data = [
+        {outcome: "Recovered", count: conf},
+        {outcome: "Confirmed", count: totalConf},
+                ];
+
   const pieData = pie()
         .value((d) => d.count)(data)
 
@@ -26,7 +29,7 @@ useEffect(() => {
     const colors = scaleOrdinal(["pink", "cornflowerblue"])
 
     //setting the stage
-    const svg = select(pieChart.current)
+    const svg = select(pieChart.current).remove()
         // .attr("width", width)
         // .attr("height", height)
         .attr("background-color", "green")
@@ -52,12 +55,17 @@ useEffect(() => {
 
             svg.append("text")
             .attr("text-anchor", "middle")
-            .text(97 + "%").attr('class', 'font-medium text-3xl fill-orange-400')
+            .text(pieD + "%").attr('class', 'font-medium text-3xl fill-orange-400')
             .attr("dominant-baseline", "middle")
+            console.log(pieData)
            
-})
+}, [pieD, conf, totalConf])
   return (
-        <svg ref={pieChart} viewBox="0 0 200 200"  preserveAspectRatio='xMidYMid meet'></svg>
+      <div>
+          <h1 className='text-white text-xl font-medium text-center'>Percentage Recovered</h1>
+         <svg ref={pieChart} viewBox="0 0 200 200"  preserveAspectRatio='xMidYMid meet'></svg> 
+      </div>
+        
   )
 }
 

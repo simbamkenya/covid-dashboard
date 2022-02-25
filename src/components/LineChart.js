@@ -6,10 +6,6 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
   const lineRef = useRef(null)
 
   const url = 'https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/3_TwoNumOrdered_comma.csv'
-
-  // const csvUrl = process.env.PUBLIC_URL+"/time_series_covid19_confirmed_global.csv"
-  const csvUrl = 'https://raw.githubusercontent.com/plotly/datasets/master/timeseries.csv'
-  // csv(csvUrl).then(data => console.log(data))
   
     csv('time_series_covid19_confirmed_global.csv').then(data =>{
       data.forEach(e => {
@@ -69,7 +65,6 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
           }
         }
       })
-      console.log(confirmedByCountry)
 
   })
 
@@ -90,9 +85,8 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
         }
       })
 
-    // console.log(columns)
+ 
     const latest = columns[columns.length - 1]
-    // console.log(columns[columns.length - 1])
     const latestDeaths = []
     
       data.forEach(e => {
@@ -169,22 +163,49 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
     
 
    })
-   csv('time_series_covid19_confirmed_global_line.csv').then(data => {
-      data.forEach(e => {
-        delete e['Province/State']
-        delete e['Lat']
-        delete e['Long']
-      })
+  //  csv('time_series_covid19_confirmed_global_line.csv').then(data => {
+  //     data.forEach(e => {
+  //       delete e['Province/State']
+  //       delete e['Lat']
+  //       delete e['Long']
+  //     })
 
-      console.log(typeof data)
+  //     const obj = []
+  //     data.forEach(e => {
+  //       for(let k in e){
+  //         if(k === 'total'){
+  //           obj.push(e)
+  //         }
+  //       }
+  //     })
+      
+  //     const result = data.reduce(function(acc, x) {
+  //       var id = acc[x['Country/Region']]
+  //       if (id) {
+  //           id['Country/Region'] = x['Country/Region']
+  //       } else {
+  //           acc[x['Country/Region']] = x
+  //       }
+  //       return acc
+  //       },[])
 
-      const d = []
+  //       const r = result.total
+      
+  //       const res = []
 
-      // data.forEach(e => {
+  //     result.forEach(e => {
+  //       for(let k in e){
+  //         // if(k !== 'Country/Region'){
+  //         //   res.push({date: k, value: +e[k]})
+  //         // }
+  //         res.push({date: Object.keys(result.total).slice(0, result.total.length -1)})
+  //       }
+  //     })
+  //     // console.log(Object.keys(result.total))
+  //     console.log(Object.keys(result.total))
+      
 
-      // })
-
-   })
+  //  })
    
 
   useEffect(() => {
@@ -200,7 +221,7 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
       .append("svg")
       // .attr("width", width + margin.left + margin.right)
       // .attr("height", height + margin.top + margin.bottom)
-      .attr('viewBox', '0 0 600 450')
+      .attr('viewBox', '0 0 800 600')
       .attr('preserveAspectRatio', 'xMidYMid meet')
       .append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -215,13 +236,10 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
 
         // Now I can use this dataset:
         function (data) {
-          // console.log(Object.values(data))
-          // Add X axis --> it is a date format
+          // X axis
           const x = scaleTime()
             .domain(extent(data, d => d.date))
             .range([0, width]);
-
-            // console.log(data)
 
           svg.append("g")
             .attr("transform", `translate(0, ${height})`)
@@ -234,35 +252,11 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
           focus.append('line')
             .classed('x', true);
 
-        //  const lines = svg.append("line")
-        //     .data(data)
-        //     .attr("x1", d => x(d.date))
-        //     .attr("y1", 0)
-        //     .attr("x2", d => x(d.date))
-        //     .attr("y2", height)
-        //     .style("stroke", "red")
-        //     .style("stroke-width", 2)
-        //     .style('stroke-dasharray', 10)
-
-          // const handleMouseMove = (e) => {
-          //   const bisectDate =  bisector(d => d.date).left;
-
-          //   const x0 = x.invert(pointer(e)[0]);
-          //   const i = bisectDate(data, x0, 1);
-          //   const d0 = data[i - 1];
-          //   const d1 = data[i];
-          //   const d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-
-          // }
-
-          // Add Y axis
+          // Y axis
           const y = scaleLinear()
             .domain([0, max(data, d => +d.value)])
             .range([height, 0])
-            
-            // .format(".2s")
-            // .ticks()
-            // .tickFormat(".1f");
+          
             
             
           svg.append("g")
@@ -315,15 +309,12 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
           .attr("stop-color", "#00c6ff")
           .attr("stop-opacity", 0);
 
-
-
-
-
         })
   }, [])
 
   return (
-      <div  ref={lineRef} id='my_dataviz' className='py-4 px-4 border-orange-700 border-4'></div>
+      // <div  ref={lineRef} id='my_dataviz' className='py-4 px-4 border-orange-700 border-4'></div>
+      <div></div>
   )
 }
 
