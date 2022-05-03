@@ -33,3 +33,19 @@ body {
 circle:hover {
   opacity: 0;
 }
+
+/* .svg-icon {
+  width: 1em;
+  height: 1em;
+} */
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: red;
+}
+
+.svg-icon circle {
+  stroke: red;
+  stroke-width: 1;
+}

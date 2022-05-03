@@ -9,15 +9,16 @@ function Donut({conf, totalConf, pieD}) {
 
     
 
-const pieChart = useRef()
+const pieChart = useRef(null)
 
 useEffect(() => {
 
     
     const data = [
-        {outcome: "Recovered", count: conf},
-        {outcome: "Confirmed", count: totalConf},
+        {outcome: "Recovered", count: 40},
+        {outcome: "Confirmed", count: 100},
                 ];
+        console.log('pie',data[0])
 
   const pieData = pie()
         .value((d) => d.count)(data)
@@ -30,12 +31,9 @@ useEffect(() => {
 
     //setting the stage
     const svg = select(pieChart.current)
-
-        // .attr("width", width)
-        // .attr("height", height)
-        svg.attr("background-color", "green")
-        .append("g")
-            .attr('transform', 'translate(' + 100 + ',' + 120 + ')')
+            .append("g")
+            .attr('transform', `translate(${width/2}, ${height/2})`)
+            .style("background-color", "green")
       
     //tooltip
     const tooltip = select("#chartArea")
@@ -45,18 +43,19 @@ useEffect(() => {
         .style("background-color", "grey")
 
     //drawing pie
-    svg.append("g")
-        .selectAll("path")
+    svg.selectAll("path")
         .data(pieData)
         .join("path")
             .attr("d", arcGenerator)
             .attr("fill", (d,i) => colors(i))
             // .attr("stroke", "white")
             .attr("class", "round")
+            
 
-            svg.append("text")
+    svg.append("text")
             .attr("text-anchor", "middle")
-            .text(pieD + "%").attr('class', 'font-medium text-3xl fill-orange-400')
+            .text(pieD + "%").attr('class', 'font-medium text-3xl fill-orange-400 text-white')
+            // .text('HHHHHHH')
             .attr("dominant-baseline", "middle")
             console.log(pieData)
            
@@ -64,7 +63,7 @@ useEffect(() => {
   return (
       <div>
           <h1 className='text-white text-xl font-medium text-center'>Percentage Recovered</h1>
-         <svg ref={pieChart} viewBox="0 0 200 200"  preserveAspectRatio='xMidYMid meet'></svg> 
+         <svg ref={pieChart} viewBox={`0 0 ${width} ${height}`}  preserveAspectRatio='xMidYMid meet'></svg> 
       </div>
         
   )

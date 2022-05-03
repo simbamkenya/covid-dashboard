@@ -127,13 +127,13 @@ function Map() {
         
 
         <div>
-            <div className='max-w-full b flex bg-[#0c0f1f]'>
+            <div className='max-w-full b flex bg-[#757679]'>
                 {/* sidenav */}
 
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
                     <div id='container'>
-                        <p className='text-3xl font-bold underline text-[#66fcf1] uppercase text-center mb-4'>Covid Cases Around the Globe</p>
+                        <span className='text-3xl underline text-white  uppercase text-left mb-4'>Covid Cases Around the Globe</span>
                         <svg ref={svgRef} viewBox="0 0  980 500" preserveAspectRatio ="xMidYMid meet"></svg>
                     </div>
                 </div>
