@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 // import ddd from 'time_series_covid19_confirmed_global.csv'
-import { select, descending, ascending, selectAll, area, csv, max, line, scaleLinear, timeParse, scaleTime, axisBottom, axisLeft, extent, bisector, pointer } from 'd3'
+import { csv} from 'd3'
 
 function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTotalRecovered}) {
   const lineRef = useRef(null)
@@ -85,7 +85,7 @@ function LineChart({setTotalDeaths, setDeaths, setConfirmed, setRecovered, setTo
           }
         }
       })
-   
+      console.log('columns',columns)
       const latest = columns[columns.length - 1]
 
       const recovered = []

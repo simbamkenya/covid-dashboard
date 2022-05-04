@@ -1,13 +1,14 @@
 import React, {useEffect, useRef} from 'react'
 import  {pie, arc, scaleOrdinal, select} from "d3"
 
-function Donut({conf, totalConf, pieD}) {
+function Donut({deaths, totalConf, formatPerc}) {
 
     var margin = { top: 20, right: 10, bottom: 20, left: 10 },
-    width = 350 - margin.left - margin.right,
-    height = 350 - margin.top - margin.bottom;
+    width = 250 - margin.left - margin.right,
+    height = 250 - margin.top - margin.bottom;
+    const recovered = (totalConf-deaths)
 
-    
+    console.log({totalConf, deaths})
 
 const pieChart = useRef(null)
 
@@ -15,10 +16,12 @@ useEffect(() => {
 
     
     const data = [
-        {outcome: "Recovered", count: 40},
-        {outcome: "Confirmed", count: 100},
+        {outcome: "Recovered", count: recovered },
+        {outcome: "Confirmed", count: totalConf},
                 ];
         console.log('pie',data[0])
+
+  const pieCer = formatPerc((recovered/totalConf) *100)
 
   const pieData = pie()
         .value((d) => d.count)(data)
@@ -54,12 +57,39 @@ useEffect(() => {
 
     svg.append("text")
             .attr("text-anchor", "middle")
-            .text(pieD + "%").attr('class', 'font-medium text-3xl fill-orange-400 text-white')
+            .text( (typeof pieCer === 'number')? pieCer: '0' + "%").attr('class', 'font-medium text-3xl fill-orange-400 text-white')
             // .text('HHHHHHH')
             .attr("dominant-baseline", "middle")
             console.log(pieData)
+
+    svg.append("circle")
+        .attr("cx", 100)
+        .attr("cy",height/2)
+        .attr("r", 8)
+        .style("fill", "pink")
+    svg.append("circle")
+        .attr("cx", 20)
+        .attr("cy", height/2)
+        .attr("r", 8)
+        .style("fill", "cornflowerblue")
+        
+
+    svg.append('text')
+        .attr('y', height/2 - 20)
+        .attr('x', width/2)
+        .style('fill', 'white')
+        .html('Recovered')
+        .attr('class', 'legend-text')
+    svg.append('text')
+        .attr('y', height/2 - 20)
+        .attr('x', width/2)
+        .style('fill', 'white')
+        .html('Not Recovered')
+        .attr('class', 'legend-text')
+
+        console.log('peicer', pieCer)
            
-}, [pieD, conf, totalConf])
+}, [totalConf])
   return (
       <div>
           <h1 className='text-white text-xl font-medium text-center'>Percentage Recovered</h1>

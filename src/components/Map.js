@@ -101,7 +101,7 @@ function Map() {
                     // .attr("r", d => radialScale(d['2/5/22']))
                     .attr("r", 10)
                     .attr('class', 'circles')
-                    .style("fill", "#45A292")
+                    .style("fill", "#FFA1C9")
                     .style('opacity', 0.6)
                     .attr("stroke", "#69b3a2")
                     .attr("stroke-width", 0.2)
@@ -127,13 +127,13 @@ function Map() {
         
 
         <div>
-            <div className='max-w-full b flex bg-[#757679]'>
+            <div className='max-w-full flex bg-[#757679] mx-8 rounded-md'>
                 {/* sidenav */}
 
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
-                    <div id='container'>
-                        <span className='text-3xl underline text-white  uppercase text-left mb-4'>Covid Cases Around the Globe</span>
+                    <div id='container' className=''>
+                        <span className='text-xl  text-white  uppercase text-left mb-4'>Covid Cases Around the Globe</span>
                         <svg ref={svgRef} viewBox="0 0  980 500" preserveAspectRatio ="xMidYMid meet"></svg>
                     </div>
                 </div>

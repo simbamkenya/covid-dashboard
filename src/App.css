@@ -2,3 +2,10 @@ svg{
   width: 100%;
   height: auto;
 }
+.legend-text{
+  font-size: 0.675em;
+  text-align: middle;
+}
+#bargraph{
+background-color: blueviolet;
+}

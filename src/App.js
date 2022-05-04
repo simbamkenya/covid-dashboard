@@ -63,11 +63,11 @@ csv('time_series_covid19_deaths_global.csv')
       {/* <Dash /> */}
       {/* <Cases deaths={deaths}/> */}
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Dash/>} exact />
-        <Route path="cases" element={<Cases deaths={deaths}/>} />
-      </Routes>
-  </BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Dash deaths={totalDeaths} setDeaths={setDeaths}/>} exact />
+            <Route path="cases" element={<Cases deaths={deaths}/>} />
+          </Routes>
+      </BrowserRouter>
     </div>
   );
 }

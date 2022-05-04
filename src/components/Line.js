@@ -37,7 +37,9 @@ function Line() {
       
                 svg.append("g")
                   .attr("transform", `translate(0, ${height})`)
-                  .call(axisBottom(x)).attr('class', 'text-white');
+                  .call(axisBottom(x))
+                  .attr('class', 'text-white')
+                  .style('font-size', '0.875em');
       
                const focus = svg.append('g')
                   .attr('class', 'focus')
@@ -53,7 +55,12 @@ function Line() {
                           
                   
                 svg.append("g")
-                  .call(axisLeft(y).ticks(20, "s").ticks(6)).attr('class', 'text-white')
+                  .call(axisLeft(y)
+                  .tickFormat(formatScale)
+                  .ticks(20, "s")
+                  .ticks(6))
+                  .attr('class', 'text-white')
+                  .style('font-size', '0.875em')
                 // Add the line
                 svg.append("path")
                   .datum(data)

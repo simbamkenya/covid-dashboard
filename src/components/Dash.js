@@ -9,14 +9,14 @@ import BarGraph from './BarGraph'
 import Sidebar from './Sidebar'
 
 
-function Dash() {
+function Dash({deaths, setDeaths}) {
 
-  
+
   // <Route path="/home" component={Home} />
   const formatNo = format(",")
   const formatPerc = format(".0%")
 
-  const [deaths, setDeaths] = useState([])
+  // const [deaths, setDeaths] = useState([])
 const [totalDeaths, setTotalDeaths] = useState(0)
   const [confirmed, setConfirmed] = useState(0)
   const [recovered, setRecovered] = useState([])
@@ -41,7 +41,7 @@ const [totalDeaths, setTotalDeaths] = useState(0)
 
   return (
     <div>
-      <div className='min-h-screen bg-gray-700 border-8 flex'>
+      <div className='min-h-screen bg-gray-700 border-8 flex rounded-md'>
                 {/* sidenav */}
                 <Sidebar />
                 {/* <div className='flex-shrink-0 w-full md:w-32 bg-green-200'>
@@ -72,38 +72,39 @@ const [totalDeaths, setTotalDeaths] = useState(0)
                 </div> */}
                 {/* main */}
                 <div className='flex-grow flex flex-col'>
-                    <div id='container'>
-                      <div className='bg-gray-900 px-4 py-6 hidden md:block'>
+                    <div id='container' className=' min-h-min'>
+                      <div className='bg-gray-900 px-4 py-12 hidden md:block'>
                         {/* <h1 className='text-white text-lg font-bold  text-right uppercase'>Covid-19 Dashboard</h1> */}
                         <div className='float-right'>
-                        <img class="object-cover w-8 h-8 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4" alt="Ahmed Kamel"/>
+                         <img class="object-cover w-8 h-8 rounded-full" src="https://avatars0.githubusercontent.com/u/57622665?s=460&u=8f581f4c4acd4c18c33a87b3e6476112325e8b38&v=4" alt="Ahmed Kamel"/>
                         </div>
 
                       </div>
-                      <div className='md:grid grid-cols-3 gap-3 ml-8 my-4 '>
+                      <div className='md:grid grid-cols-4 gap-3 mx-8 my-4 '>
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
                             <span className='text-lg text-gray-200 py-2'>Confirmed Cases</span>
-                            <span className='text-2xl'>{formatNo(confirmed)}</span>
+                            <span className='text-4xl text-red-500 '>{formatNo(confirmed)}</span>
                           </div>
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
-                            <span className='text-lg text-gray-200'>Recovered Cases</span>
-                            <span className='text-2xl'>{formatNo(totalRecovered)}</span>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
+                            <span className='text-lg text-gray-200 py-2'>Recovered Cases</span>
+                            <span className='text-4xl'>{formatNo(totalRecovered)}</span>
                           </div>
-                          {/* <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
-                            <h2>No of Deaths</h2>
-                            <h2>{totalDeaths}</h2>
-                          </div> */}
+                        
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
+                            <span className='text-lg text-gray-200 py-2'>No of Deaths</span>
+                            <span className='text-4xl text-red-500'>{formatNo(deaths)}</span>
+                          </div>
 
-                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center'>
-                            <span className='text-lg text-gray-200'>Vaccinated</span>
-                            <span className='text-2xl'>{formatNo(totalDeaths)}</span>
+                          <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
+                            <span className='text-lg text-gray-200 py-2'>Vaccinated</span>
+                            <span className='text-4xl text-red-500'>{formatNo(deaths)}</span>
                           </div>
                       </div>
                         <Map />
                     </div>
 
-                    <div className='border-2 border-red-200 flex'>
-                      <div className='w-3/5'>
+                    <div className='border-2 border-red-200 flex mx-8 my-4'>
+                      <div className='w-3/5 mr-2 border-8 rounded-md'>
                          <LineChart  setDeaths={setDeaths} setTotalDeaths={setTotalDeaths} setConfirmed={setConfirmed} setRecovered={setRecovered} setTotalRecovered={setTotalRecovered}/>
                          <Line />
                          {/* <div className='mb-4 w-full shadow-md rounded border-gray-400'>
@@ -128,9 +129,9 @@ const [totalDeaths, setTotalDeaths] = useState(0)
                           </div> */}
                       </div>
 
-                      <div className='border-4 border-green-500 w-2/5'>
-                        <div className='flex justify-center items-center'>
-                          <Donut pieD={pie} conf={conf} totalConf={totalConf}/>
+                      <div className='border-4 border-green-500 w-2/5 rounded-md'>
+                        <div className='flex justify-center items-center rounded-md'>
+                          <Donut pieD={pie} deaths={deaths} totalConf={confirmed} formatPerc={formatPerc}/>
                         </div>
                       </div>
                     </div>

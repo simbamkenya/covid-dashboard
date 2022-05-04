@@ -7,8 +7,8 @@ body {
 }
 
 .country {
-  fill: #ed9121;
-  stroke: #141313;
+  fill: #414343;
+  stroke: white;
   /* stroke-width: ; */
   stop-opacity: 0.1;
   stroke-width: 0.05px;
