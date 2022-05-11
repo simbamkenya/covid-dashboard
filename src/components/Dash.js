@@ -9,7 +9,7 @@ import BarGraph from './BarGraph'
 import Sidebar from './Sidebar'
 
 
-function Dash({deaths, setDeaths}) {
+function Dash({deaths, setDeaths, confirmed, totalRecovered}) {
 
 
   // <Route path="/home" component={Home} />
@@ -18,13 +18,15 @@ function Dash({deaths, setDeaths}) {
 
   // const [deaths, setDeaths] = useState([])
 const [totalDeaths, setTotalDeaths] = useState(0)
-  const [confirmed, setConfirmed] = useState(0)
-  const [recovered, setRecovered] = useState([])
-  const [totalRecovered, setTotalRecovered] = useState(0)
+  
+ 
+ 
   const [pie, setPie] = useState(0)
 
   const [conf, setConf] = useState(0)
   const [totalConf, setTotalConf] = useState(0)
+
+  const shareRecovered = ((confirmed - deaths) /confirmed)*100
 
 
  useEffect(()=>{
@@ -36,7 +38,7 @@ const [totalDeaths, setTotalDeaths] = useState(0)
     setConf(conf)
     setTotalConf(totalConf)
   }
-
+ 
  },[])
 
   return (
@@ -87,7 +89,7 @@ const [totalDeaths, setTotalDeaths] = useState(0)
                           </div>
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
                             <span className='text-lg text-gray-200 py-2'>Recovered Cases</span>
-                            <span className='text-4xl'>{formatNo(totalRecovered)}</span>
+                            <span className='text-4xl text-[#0AA1DD]'>{formatNo(totalRecovered)}</span>
                           </div>
                         
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
@@ -96,8 +98,8 @@ const [totalDeaths, setTotalDeaths] = useState(0)
                           </div>
 
                           <div className='px-4  py-2 bg-gray-900 text-white text-2xl rounded-lg mb-2 text-center flex flex-col justify-start'>
-                            <span className='text-lg text-gray-200 py-2'>Vaccinated</span>
-                            <span className='text-4xl text-red-500'>{formatNo(deaths)}</span>
+                            <span className='text-lg text-gray-200 py-2'>Fully Vaccinated</span>
+                            <span className='text-4xl text-[#0AA1DD]'>4,670,707,904</span>
                           </div>
                       </div>
                         <Map />
@@ -105,7 +107,7 @@ const [totalDeaths, setTotalDeaths] = useState(0)
 
                     <div className='border-2 border-red-200 flex mx-8 my-4'>
                       <div className='w-3/5 mr-2 border-8 rounded-md'>
-                         <LineChart  setDeaths={setDeaths} setTotalDeaths={setTotalDeaths} setConfirmed={setConfirmed} setRecovered={setRecovered} setTotalRecovered={setTotalRecovered}/>
+                         {/* <LineChart  setDeaths={setDeaths} setTotalDeaths={setTotalDeaths}  setRecovered={setRecovered} setTotalRecovered={setTotalRecovered}/> */}
                          <Line />
                          {/* <div className='mb-4 w-full shadow-md rounded border-gray-400'>
                             <h4 className='text-sm text-white uppercase font-bold tracking-widest'>No Recovered</h4>
@@ -131,12 +133,13 @@ const [totalDeaths, setTotalDeaths] = useState(0)
 
                       <div className='border-4 border-green-500 w-2/5 rounded-md'>
                         <div className='flex justify-center items-center rounded-md'>
-                          <Donut pieD={pie} deaths={deaths} totalConf={confirmed} formatPerc={formatPerc}/>
+                          <Donut pieD={formatPerc(shareRecovered)} deaths={deaths} totalConf={confirmed} formatPerc={formatPerc}/>
                         </div>
                       </div>
                     </div>
                 </div>
             </div>
+
             {/* <Cases deaths={deaths} confirmed={confirmed} recovered={recovered} formatNo={formatNo} /> */}
             {/* {console.log('d',deaths)} */}
             {/* <Donut pieD={pie} conf={conf} totalConf={totalConf}/> */}

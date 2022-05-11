@@ -3,7 +3,7 @@ import {  BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <div className='flex-shrink-0 w-48 bg-gray-900'>
+    <div className='flex-shrink-0 w-24 md:w-48 bg-gray-900'>
      <a>
         <div className='flex items-center h-16 px-4 bg-gray-900 text-xl text-white font-medium'>
         <svg className='relative w-8 h-8 fill-current svg-icon' viewBox="0 0 20 20">
@@ -12,23 +12,23 @@ function Sidebar() {
         <div className='ml-2 pt-[2px]'>Covid</div>
         </div>
     </a>
-<div className='px-6 py-6 border-t border-gray-700'>
+<div className='px-2 md:px-6 py-6 border-t border-gray-700'>
     {/* <h4 className='text-sm text-gray-600 uppercase font-bold tracking-widest'>Contact</h4> */}
     <ul className='mt-3 text-white'>
         <li className='mt-3'>
-            <Link to="/" href="" className='bg-slate-600 text-white rounded-md px-6 py-2 w-full inline-flex'>
+            <Link to="/" href="" className='bg-slate-600 text-white rounded-md px-2 md:px-6 py-2 w-full inline-flex'>
                <svg className="svg-icon h-6 w-6 flex-shrink-0" viewBox="0 0 24 24">
                     <path d="M18.121,9.88l-7.832-7.836c-0.155-0.158-0.428-0.155-0.584,0L1.842,9.913c-0.262,0.263-0.073,0.705,0.292,0.705h2.069v7.042c0,0.227,0.187,0.414,0.414,0.414h3.725c0.228,0,0.414-0.188,0.414-0.414v-3.313h2.483v3.313c0,0.227,0.187,0.414,0.413,0.414h3.726c0.229,0,0.414-0.188,0.414-0.414v-7.042h2.068h0.004C18.331,10.617,18.389,10.146,18.121,9.88 M14.963,17.245h-2.896v-3.313c0-0.229-0.186-0.415-0.414-0.415H8.342c-0.228,0-0.414,0.187-0.414,0.415v3.313H5.032v-6.628h9.931V17.245z M3.133,9.79l6.864-6.868l6.867,6.868H3.133z"></path>
                 </svg>
-                <span className='ml-2'>Home</span>    
+                <span className='md:ml-2 ml-1'>Home</span>    
             </Link>
         </li>
         <li className='mt-3'>
-            <Link to="/cases" href="" className='bg-slate-600 text-white rounded-md px-6 py-2 w-full inline-flex'>
+            <Link to="/cases" href="" className='bg-slate-600 text-white rounded-md px-2 md:px-6 py-2 w-full inline-flex'>
                  <svg className="svg-icon h-6 w-6 flex-shrink-0" viewBox="0 0 24 24">
                     <path d="M10,6.978c-1.666,0-3.022,1.356-3.022,3.022S8.334,13.022,10,13.022s3.022-1.356,3.022-3.022S11.666,6.978,10,6.978M10,12.267c-1.25,0-2.267-1.017-2.267-2.267c0-1.25,1.016-2.267,2.267-2.267c1.251,0,2.267,1.016,2.267,2.267C12.267,11.25,11.251,12.267,10,12.267 M18.391,9.733l-1.624-1.639C14.966,6.279,12.563,5.278,10,5.278S5.034,6.279,3.234,8.094L1.609,9.733c-0.146,0.147-0.146,0.386,0,0.533l1.625,1.639c1.8,1.815,4.203,2.816,6.766,2.816s4.966-1.001,6.767-2.816l1.624-1.639C18.536,10.119,18.536,9.881,18.391,9.733 M16.229,11.373c-1.656,1.672-3.868,2.594-6.229,2.594s-4.573-0.922-6.23-2.594L2.41,10l1.36-1.374C5.427,6.955,7.639,6.033,10,6.033s4.573,0.922,6.229,2.593L17.59,10L16.229,11.373z"></path>
                 </svg>
-                <span className='ml-2 px-2'>Cases</span>   
+                <span className='md:ml-2 ml-1'>Cases</span>   
             </Link>
         </li>
     </ul>

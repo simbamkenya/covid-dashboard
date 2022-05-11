@@ -49,3 +49,7 @@ circle:hover {
   stroke: red;
   stroke-width: 1;
 }
+
+svg{
+  width: 80%;
+}

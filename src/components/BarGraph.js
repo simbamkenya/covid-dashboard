@@ -24,9 +24,9 @@ function BarGraph({data}) {
     // csv('https://raw.githubusercontent.com/holtzy/data_to_viz/master/Example_dataset/7_OneCatOneNum_header.csv').then((data) => {
             // X axis
         const x = scaleBand()
-        .range([ 0, width ])
+        .range([ 0, width*0.8])
         .domain(data.map(d => d.country))
-        .padding(0.2);
+        .padding(0.01);
 
         svg.append("g")
         .attr("transform", `translate(0, ${height})`)
@@ -51,11 +51,13 @@ function BarGraph({data}) {
         svg.selectAll("mybar")
         .data(data)
         .join("rect")
-        .attr("x", d => x(d.country))
+        .attr("x", d => x(d.country)+25)
         .attr("y", d => y(d.deaths))
-        .attr("width", x.bandwidth())
+        .attr("width", x.bandwidth()/2.5)
         .attr("height", d => height - y(d.deaths))
         .attr("fill", "#f545e9")
+        
+        
         // })
 
     }, [data])

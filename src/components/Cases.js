@@ -3,7 +3,7 @@ import BarGraph from './BarGraph'
 import Sidebar from './Sidebar'
 import { format } from 'd3'
 
-function Cases({ deaths }) {
+function Cases({ deaths, confirmed, recovered }) {
     // console.log(recovered)
     const formatNo = format(",")
     const formatPerc = format(".0%")
@@ -93,10 +93,10 @@ function Cases({ deaths }) {
 
                         <tbody className='divide-y divide-gray-300'>
                             deaths
-                            {deaths.map((e, i) => (
+                            {recovered.map((e, i) => (
                                 <tr key={e.country}>
                                 <td>{`${++i}.`} {e.country}</td>
-                                <td>{formatNo(e.deaths)}</td>
+                                <td>{formatNo(e.confirmed)}</td>
                             </tr>
                             ))}
                         </tbody>
